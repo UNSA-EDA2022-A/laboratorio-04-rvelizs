@@ -146,21 +146,21 @@ public class SinglyLinkedList<T> {
         if (position == 0) // SI DESEA QUITAR [0] (INICIO DE LA LISTA)
 			removeFirst();
 		
-		else if (position < size) { // SI DESEA QUITAR [0 < position < size]
-			
-			// > ITERACIÓN PARA UNIR newNode CON EL RESTO DE LA LISTA
-			// --------------------------------------------------------------------------
-			Node<T> cur = first; // NODO RECORRIDO		index = 0
-			for (int i = 1; i < position; i++)		//	index > 0
-				cur = cur.getNext();				//	RECORRE NODOS
-			cur.setNext(cur.getNext().getNext());	//	NODO EN POSICIÓN [position - 1] CONECTA CON DOS NODOS DESPUÉS
-			// --------------------------------------------------------------------------
-		}
+	else if (position < size) { // SI DESEA QUITAR [0 < position < size]
 		
-		else // SI DESEA AGREGAR EN [position > size]
-			System.out.println("Fuera de rango.");
+		// > ITERACIÓN PARA QUITAR EL NODO DE LA LISTA
+		// --------------------------------------------------------------------------
+		Node<T> cur = first; // NODO RECORRIDO		index = 0
+		for (int i = 1; i < position; i++)		//	index > 0
+			cur = cur.getNext();				//	RECORRE NODOS
+		cur.setNext(cur.getNext().getNext());	//	NODO EN POSICIÓN [position - 1] CONECTA CON DOS NODOS DESPUÉS
+		// --------------------------------------------------------------------------
 		
 		size--;										// ACTUALIZA EL TAMAÑO DE LA LISTA
+	}
+	
+	else // SI DESEA QUITAR EN [position > size]
+		System.out.println("Fuera de rango.");
     }
 
     public static void main(final String[] args) {

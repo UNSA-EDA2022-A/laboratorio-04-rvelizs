@@ -100,7 +100,33 @@ public class SinglyLinkedList<T> {
 
     // Elimina aquellos nodos de la lista que esten duplicados
     public void deleteDuplicates() {
-        // * 
+	    Node<T> cur = first;
+		Node<T> temporal = null; // VALORES DUPLICADOS
+		Node<T> index = null; // PARA RECORRER
+
+		if (first == null) {
+			return;
+		} else {
+			while (cur != null) {
+				// temporal APUNTARÁ AL NODO ANTERIOR A index
+				temporal = cur;										// temporal = 0
+				// index = NODO SIGUIENTE DE cur
+				index = cur.getNext();								// index = 1
+
+				while (index != null) { // MIENTRAS HAYA ELEMENTOS EN LA LISTA
+					if (cur.compareTo(index) == 0) { // SI EL VALOR DE cur ES IGUAL AL VALOR DE index
+						// index SEÑALA AL NODO CON VALOR DUPLICADO
+						temporal.setNext(index.getNext()); // IGNORA EL NODO CON VALOR DUPLICADO Y REFERENCIA AL
+															// SIGUIENTE
+					} else {
+						// temporal REFERENCIA AL NODO ANTERIOR A index
+						temporal = index;
+					}
+					index = index.getNext();						// RECORRER LISA
+				}
+				cur = cur.getNext();								// RECORRER LISTA
+			}
+		}
     }
 
     // Inserta un nuevo nodo en una posicion especifica de la lista

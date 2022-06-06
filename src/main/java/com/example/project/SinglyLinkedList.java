@@ -100,17 +100,93 @@ public class SinglyLinkedList<T> {
 
     // Elimina aquellos nodos de la lista que esten duplicados
     public void deleteDuplicates() {
+	    Node<T> cur = first;
+		Node<T> temporal = null; // VALORES DUPLICADOS
+		Node<T> index = null; // PARA RECORRER
 
+		if (first == null) {
+			return;
+		} else {
+			while (cur != null) {
+				// temporal APUNTARÁ AL NODO ANTERIOR A index
+				temporal = cur;										// temporal = 0
+				// index = NODO SIGUIENTE DE cur
+				index = cur.getNext();								// index = 1
+
+				while (index != null) { // MIENTRAS HAYA ELEMENTOS EN LA LISTA
+					if (cur.compareTo(index) == 0) { // SI EL VALOR DE cur ES IGUAL AL VALOR DE index
+						// index SEÑALA AL NODO CON VALOR DUPLICADO
+						temporal.setNext(index.getNext()); // IGNORA EL NODO CON VALOR DUPLICADO Y REFERENCIA AL
+															// SIGUIENTE
+					} else {
+						// temporal REFERENCIA AL NODO ANTERIOR A index
+						temporal = index;
+					}
+					index = index.getNext();						// RECORRER LISA
+				}
+				cur = cur.getNext();								// RECORRER LISTA
+			}
+		}
     }
 
     // Inserta un nuevo nodo en una posicion especifica de la lista
     public void insertNth(T data, int position) {
+        Node<T> newNode = new Node<T>(data, null); // NODO QUE INGRESAREMOS
+		
+		if (isEmpty()) { // SI ESTÁ VACÍA
+			first = newNode;
+		} else {
+			
+			if (position == 0) // SI DESEA AGREGAR EN [0] (INICIO DE LA LISTA)
+				addFirst(data);
+			else if (position < size) { // SI DESEA AGREGAR EN [0 < position < size]
+				
+				// > PRIMERA ITERACIÓN PARA UNIR newNode CON EL RESTO DE LA LISTA
+				// --------------------------------------------------------------------------
+				Node<T> cur = first; // NODO RECORRIDO	index = 0
+				for (int i = 1; i < position; i++)	// 	index > 0
+					cur = cur.getNext();			//	RECORRE NODOS
+				newNode.setNext(cur.getNext()); 	//	newNode APUNTA A LOS NODOS EN ADELANTE	
+				// --------------------------------------------------------------------------
+				
 
+				// > SEGUNDA ITERACIÓN PARA CONECTAR LA PRIMERA PARTE DE LA LISTA CON newNode
+				// --------------------------------------------------------------------------
+				cur = first; // REINICIO DEL AUXILIAR	index = 0
+				for (int i = 1; i < position; i++) 	//	index > 0
+					cur = cur.getNext();			//	RECORRE NODOS
+				cur.setNext(newNode); 				//	NODO EN POSICIÓN [position - 1] CONECTA CON newNode
+				// --------------------------------------------------------------------------
+				
+				size++; 							// ACTUALIZA EL TAMAÑO DE LA LISTA
+
+			} else if (position == size) // SI DESEA AGREGAR EN [size] (FINAL DE LA LISTA)
+				addLast(data);
+			else // SI DESEA AGREGAR EN [position > size]
+				System.out.println("Fuera de rango.");
+		}
     }
 
     // Elimina el nodo de una posicion especifica de la lista
     public void deleteNth(int position) {
-
+        if (position == 0) // SI DESEA QUITAR [0] (INICIO DE LA LISTA)
+			removeFirst();
+		
+	else if (position < size) { // SI DESEA QUITAR [0 < position < size]
+		
+		// > ITERACIÓN PARA QUITAR EL NODO DE LA LISTA
+		// --------------------------------------------------------------------------
+		Node<T> cur = first; // NODO RECORRIDO		index = 0
+		for (int i = 1; i < position; i++)		//	index > 0
+			cur = cur.getNext();				//	RECORRE NODOS
+		cur.setNext(cur.getNext().getNext());	//	NODO EN POSICIÓN [position - 1] CONECTA CON DOS NODOS DESPUÉS
+		// --------------------------------------------------------------------------
+		
+		size--;										// ACTUALIZA EL TAMAÑO DE LA LISTA
+	}
+	
+	else // SI DESEA QUITAR EN [position > size]
+		System.out.println("Fuera de rango.");
     }
 
     public static void main(final String[] args) {
